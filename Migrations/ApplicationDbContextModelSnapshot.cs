@@ -2,11 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SimpleERP.Data;
+using StockERP.Data;
 
 #nullable disable
 
-namespace SimpleERP.Migrations
+namespace StockERP.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -16,7 +16,7 @@ namespace SimpleERP.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.5");
 
-            modelBuilder.Entity("SimpleERP.Models.Category", b =>
+            modelBuilder.Entity("StockERP.Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -31,7 +31,7 @@ namespace SimpleERP.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("SimpleERP.Models.Customer", b =>
+            modelBuilder.Entity("StockERP.Models.Customer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -53,7 +53,7 @@ namespace SimpleERP.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("SimpleERP.Models.Product", b =>
+            modelBuilder.Entity("StockERP.Models.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -84,7 +84,7 @@ namespace SimpleERP.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("SimpleERP.Models.Supplier", b =>
+            modelBuilder.Entity("StockERP.Models.Supplier", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -105,13 +105,13 @@ namespace SimpleERP.Migrations
                     b.ToTable("Suppliers");
                 });
 
-            modelBuilder.Entity("SimpleERP.Models.Product", b =>
+            modelBuilder.Entity("StockERP.Models.Product", b =>
                 {
-                    b.HasOne("SimpleERP.Models.Category", "Category")
+                    b.HasOne("StockERP.Models.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId");
 
-                    b.HasOne("SimpleERP.Models.Supplier", "Supplier")
+                    b.HasOne("StockERP.Models.Supplier", "Supplier")
                         .WithMany("Products")
                         .HasForeignKey("SupplierId");
 
@@ -120,12 +120,12 @@ namespace SimpleERP.Migrations
                     b.Navigation("Supplier");
                 });
 
-            modelBuilder.Entity("SimpleERP.Models.Category", b =>
+            modelBuilder.Entity("StockERP.Models.Category", b =>
                 {
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("SimpleERP.Models.Supplier", b =>
+            modelBuilder.Entity("StockERP.Models.Supplier", b =>
                 {
                     b.Navigation("Products");
                 });

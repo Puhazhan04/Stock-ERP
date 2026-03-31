@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace SimpleERP.Migrations
+namespace StockERP.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration

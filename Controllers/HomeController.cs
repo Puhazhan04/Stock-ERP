@@ -1,10 +1,10 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SimpleERP.Data;
-using SimpleERP.Models;
+using StockERP.Data;
+using StockERP.Models;
 using System.Diagnostics;
 
-namespace SimpleERP.Controllers;
+namespace StockERP.Controllers;
 
 public class HomeController : Controller
 {

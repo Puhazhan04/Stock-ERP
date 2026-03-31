@@ -1,6 +1,6 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace SimpleERP.Models
+namespace StockERP.Models
 {
     public class Supplier
     {

@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SimpleERP.Data;
+using StockERP.Data;
 
 #nullable disable
 
-namespace SimpleERP.Migrations
+namespace StockERP.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20260330224211_InitialCreate")]
@@ -19,7 +19,7 @@ namespace SimpleERP.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.5");
 
-            modelBuilder.Entity("SimpleERP.Models.Customer", b =>
+            modelBuilder.Entity("StockERP.Models.Customer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -41,7 +41,7 @@ namespace SimpleERP.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("SimpleERP.Models.Product", b =>
+            modelBuilder.Entity("StockERP.Models.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

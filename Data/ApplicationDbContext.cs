@@ -1,7 +1,7 @@
-using Microsoft.EntityFrameworkCore;
-using SimpleERP.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using StockERP.Models;
 
-namespace SimpleERP.Data
+namespace StockERP.Data
 {
     public class ApplicationDbContext : DbContext
     {

@@ -1,5 +1,5 @@
-using Microsoft.EntityFrameworkCore;
-using SimpleERP.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using StockERP.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,4 +1,4 @@
-namespace SimpleERP.Models;
+﻿namespace StockERP.Models;
 
 public class ErrorViewModel
 {
