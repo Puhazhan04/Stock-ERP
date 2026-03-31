@@ -1,3 +1,4 @@
 # Stock-ERP
 
-Eine einfache ASP.NET Core MVC ERP-Anwendung zur Verwaltung von Produkten, Kategorien, Lieferanten und Kunden.
+Bitte schauen Sie im GitHub-Wiki dieses Projekts.
+
