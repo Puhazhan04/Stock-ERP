@@ -10,8 +10,8 @@ using StockERP.Data;
 namespace StockERP.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260330225656_ExpandERP")]
-    partial class ExpandERP
+    [Migration("20260331185348_InitialScaffold")]
+    partial class InitialScaffold
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
