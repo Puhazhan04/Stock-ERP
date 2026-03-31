@@ -1,0 +1,14 @@
+@model SimpleERP.Models.Category
+@{ ViewData["Title"] = "Kategorie löschen"; }
+<h1 class="text-danger">Kategorie löschen</h1>
+<div class="alert alert-warning">
+    <h3>Möchtest du diese Kategorie wirklich löschen?</h3>
+    <dl class="row">
+        <dt class="col-sm-3">Name</dt><dd class="col-sm-9">@Model.Name</dd>
+    </dl>
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Löschen" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-secondary">Abbrechen</a>
+    </form>
+</div>

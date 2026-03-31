@@ -1,0 +1,11 @@
+@model SimpleERP.Models.Category
+@{ ViewData["Title"] = "Kategorie erstellen"; }
+<h1>Kategorie hinzufügen</h1>
+<form asp-action="Create">
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-success">Speichern</button>
+    <a asp-action="Index" class="btn btn-secondary">Abbrechen</a>
+</form>

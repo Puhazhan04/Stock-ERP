@@ -1,0 +1,209 @@
+@model SimpleERP.Models.Product
+
+@{
+    ViewData["Title"] = "Produkt bearbeiten";
+}
+
+<h1>Produkt bearbeiten</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label font-weight-bold">Produktname</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="CategoryId" class="form-label font-weight-bold">Kategorie</label>
+                <div class="input-group">
+                    <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId" id="categorySelect">
+                        <option value="">-- Kategorie wählen --</option>
+                    </select>
+                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#newCategoryModal"
+                            title="Neue Kategorie erstellen">
+                        + Neu
+                    </button>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="SupplierId" class="form-label font-weight-bold">Lieferant</label>
+                <div class="input-group">
+                    <select asp-for="SupplierId" class="form-control" asp-items="ViewBag.SupplierId" id="supplierSelect">
+                        <option value="">-- Lieferant wählen --</option>
+                    </select>
+                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#newSupplierModal"
+                            title="Neuen Lieferanten erstellen">
+                        + Neu
+                    </button>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Price" class="form-label font-weight-bold">Preis (CHF)</label>
+                <input asp-for="Price" class="form-control" type="number" step="0.01" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Stock" class="form-label font-weight-bold">Lagerbestand</label>
+                <input asp-for="Stock" class="form-control" type="number" />
+                <span asp-validation-for="Stock" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <input type="submit" value="Änderungen speichern" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Abbrechen</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal: Neue Kategorie erstellen -->
+<div class="modal fade" id="newCategoryModal" tabindex="-1" aria-labelledby="newCategoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newCategoryModalLabel">Neue Kategorie</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+            </div>
+            <div class="modal-body">
+                <div id="categoryError" class="alert alert-danger d-none"></div>
+                <label for="newCategoryName" class="form-label">Kategoriename</label>
+                <input type="text" id="newCategoryName" class="form-control" placeholder="z.B. Elektronik" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                <button type="button" class="btn btn-primary" id="saveCategoryBtn">Speichern</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Neuen Lieferant erstellen -->
+<div class="modal fade" id="newSupplierModal" tabindex="-1" aria-labelledby="newSupplierModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newSupplierModalLabel">Neuer Lieferant</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+            </div>
+            <div class="modal-body">
+                <div id="supplierError" class="alert alert-danger d-none"></div>
+                <label for="newSupplierName" class="form-label">Lieferantenname</label>
+                <input type="text" id="newSupplierName" class="form-control" placeholder="z.B. IT-Systemhaus" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                <button type="button" class="btn btn-primary" id="saveSupplierBtn">Speichern</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        document.getElementById('saveCategoryBtn').addEventListener('click', async function () {
+            const nameInput = document.getElementById('newCategoryName');
+            const errorDiv = document.getElementById('categoryError');
+            const name = nameInput.value.trim();
+
+            if (!name) {
+                errorDiv.textContent = 'Bitte einen Kategorienamen eingeben.';
+                errorDiv.classList.remove('d-none');
+                return;
+            }
+
+            errorDiv.classList.add('d-none');
+
+            try {
+                const response = await fetch('/Products/CreateCategory', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(name)
+                });
+
+                if (!response.ok) {
+                    const msg = await response.text();
+                    errorDiv.textContent = msg;
+                    errorDiv.classList.remove('d-none');
+                    return;
+                }
+
+                const category = await response.json();
+
+                // Neue Option zum Dropdown hinzufügen und auswählen
+                const select = document.getElementById('categorySelect');
+                const option = new Option(category.name, category.id, true, true);
+                select.appendChild(option);
+
+                // Modal schließen und Eingabe zurücksetzen
+                nameInput.value = '';
+                bootstrap.Modal.getInstance(document.getElementById('newCategoryModal')).hide();
+
+            } catch (e) {
+                errorDiv.textContent = 'Fehler beim Speichern. Bitte versuche es erneut.';
+                errorDiv.classList.remove('d-none');
+            }
+        });
+
+        // Enter-Taste im Eingabefeld auslösen
+        document.getElementById('newCategoryName').addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') document.getElementById('saveCategoryBtn').click();
+        });
+
+        // Lieferant-Logik
+        document.getElementById('saveSupplierBtn').addEventListener('click', async function () {
+            const nameInput = document.getElementById('newSupplierName');
+            const errorDiv = document.getElementById('supplierError');
+            const name = nameInput.value.trim();
+
+            if (!name) {
+                errorDiv.textContent = 'Bitte einen Lieferantennamen eingeben.';
+                errorDiv.classList.remove('d-none');
+                return;
+            }
+
+            errorDiv.classList.add('d-none');
+
+            try {
+                const response = await fetch('/Products/CreateSupplier', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(name)
+                });
+
+                if (!response.ok) {
+                    const msg = await response.text();
+                    errorDiv.textContent = msg;
+                    errorDiv.classList.remove('d-none');
+                    return;
+                }
+
+                const supplier = await response.json();
+
+                const select = document.getElementById('supplierSelect');
+                const option = new Option(supplier.name, supplier.id, true, true);
+                select.appendChild(option);
+
+                nameInput.value = '';
+                bootstrap.Modal.getInstance(document.getElementById('newSupplierModal')).hide();
+
+            } catch (e) {
+                errorDiv.textContent = 'Fehler beim Speichern. Bitte versuche es erneut.';
+                errorDiv.classList.remove('d-none');
+            }
+        });
+
+        document.getElementById('newSupplierName').addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') document.getElementById('saveSupplierBtn').click();
+        });
+    </script>
+}

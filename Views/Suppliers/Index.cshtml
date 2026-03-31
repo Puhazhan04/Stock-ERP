@@ -1,0 +1,18 @@
+@model IEnumerable<SimpleERP.Models.Supplier>
+@{ ViewData["Title"] = "Lieferanten"; }
+<h1>Lieferanten</h1>
+<p><a asp-action="Create" class="btn btn-primary">Neuer Lieferant</a></p>
+<table class="table">
+    <thead><tr><th>Name</th><th>Kontakt</th><th>Email</th><th>Aktionen</th></tr></thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr><td>@item.Name</td><td>@item.ContactPerson</td><td>@item.Email</td>
+            <td>
+                <div class="d-flex gap-1">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info">Bearbeiten</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Löschen</a>
+                </div>
+            </td>
+        </tr>}
+    </tbody>
+</table>
